@@ -1,7 +1,7 @@
  <?php
 //remote TSC web Server Proxy
 
-$url = 'FACEBOOK URL';
+$url = 'FACEBOOK URL AND TOKEN';
 
 function objectToArray($d) {
  if (is_object($d)) {
@@ -32,15 +32,15 @@ function objectToArray($d) {
  */
  
 
-
+//var_dump($url);
 $ch = curl_init();
- //set POST variables
 //print_r($fields);
 //set the url, number of POST vars, POST data
 curl_setopt($ch,CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HEADER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 //execute post
 $responce = curl_exec($ch);
@@ -50,6 +50,7 @@ $result = array( 'header' => '',
                          'http_code' => '',
                          'last_url' => '');
 $output=$responce;
+//var_dump($output);
 
 $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
 $header=substr($responce, 0, $header_size);
@@ -75,5 +76,5 @@ curl_close($ch);
 header('Content-Type: application/json');
 http_response_code($result['http_code']);
 //answering
-echo json_encode($result['body']);
+echo $body;
 
